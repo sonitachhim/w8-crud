@@ -1,6 +1,7 @@
 *
-!/lib/
 !/.gitignore
+!/lib/
+!/lib/**
 
 # Miscellaneous
 *.class
