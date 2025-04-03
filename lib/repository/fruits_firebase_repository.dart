@@ -8,7 +8,8 @@ import '../DTO/fruits_dto.dart';
 import '../model/fruits.dart';
 
 class FruitsFirebaseRepository extends FruitRepository {
-  static const String baseUrl = '';
+  static const String baseUrl =
+      'https://fruits-4acd2-default-rtdb.firebaseio.com';
   static const String fruitsCollection = "fruits";
   static const String allFruitsUrl = '$baseUrl/$fruitsCollection.json';
 
@@ -37,7 +38,7 @@ class FruitsFirebaseRepository extends FruitRepository {
   }
 
   @override
-  Future<List<Fruit>> getFruit() async {
+  Future<List<Fruit>> getFruits() async {
     Uri uri = Uri.parse(allFruitsUrl);
     final http.Response response = await http.get(uri);
 
@@ -48,11 +49,20 @@ class FruitsFirebaseRepository extends FruitRepository {
     }
 
     // Return all users
-    final data = json.decode(response.body) as Map<String, dynamic>?;
+    final decoded = json.decode(response.body);
 
-    if (data == null) return [];
-    return data.entries
-        .map((entry) => FruitsDto.fromJson(entry.key, entry.value))
-        .toList();
+    //handle null
+    if (decoded == null) {
+      return [];
+    }
+
+    if (decoded is Map<String, dynamic>) {
+      return decoded
+          .entries
+          .map((entry) => FruitsDto.fromJson(entry.key.toString(), entry.value))
+          .toList();
+    } else {
+      throw Exception("Unexpected data format from Firebase");
+    }
   }
 }

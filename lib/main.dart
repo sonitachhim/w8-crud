@@ -7,12 +7,12 @@ import 'provider/fruit_providers.dart';
 import 'screen/fruits_screen.dart';
 
 void main() async {
-  final FruitRepository fruitRepository = FirebaseFruitRepository();
+  final FruitRepository fruitRepository = FruitsFirebaseRepository();
 
   runApp(
     ChangeNotifierProvider(
-      create: (context) => Fruitprovider(fruitRepository),
-      child: MaterialApp(debugShowCheckedModeBanner: false, home: const App()),
+      create: (context) => FruitProviders(repository: fruitRepository),
+      child: MaterialApp(debugShowCheckedModeBanner: false, home: const FruitsScreen()),
     ),
   );
 }

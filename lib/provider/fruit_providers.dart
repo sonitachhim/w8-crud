@@ -8,9 +8,7 @@ class FruitProviders extends ChangeNotifier {
   final FruitRepository _repository;
   AsyncValue<List<Fruit>>? fruitsState;
 
-  FruitProviders({required FruitRepository repository}) : _repository = repository;
-
-  FruitProvider(_repository) {
+  FruitProviders({required FruitRepository repository}) : _repository = repository {
     fetchUsers();
   }
   
